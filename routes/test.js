@@ -2,10 +2,15 @@ var express = require('express');
 var router = express.Router();
 var dao = require('../common_dao');
 
+router.get('/', test);
 
-router.get('/', function(req, res, next){
-    let data = {test:'test'}
-    res.json(data)
-})
+async function test(req, res, next) {
+    var sql = `
+        select * from beers;
+    `;
+    var result = await dao.query(sql);
+    
+    res.json(result);
+}
 
 module.exports = router;
