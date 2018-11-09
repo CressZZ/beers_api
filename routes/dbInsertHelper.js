@@ -8,7 +8,7 @@ router.get('/tagsLinkBeer', tagsLinkBeer);
  * 초기 더미 디비를 만들기 위한 helper 
  * tags_link_beers
  * 
- * 만약 관리자 페이지가 있고, 실제로 넣은다고 했을때 100% 라디오 버튼으로 테그를 넣을 테니 중복 될리 없다.
+ * 만약 관리자 페이지가 있고, 실제로 넣은다고 했을때 100% 셀렉트 박스로 테그를 넣을 테니 중복 될리 없다.
  */
 async function tagsLinkBeer(req, res, next) {
     var sql =`INSERT INTO tags_link_beers (beers_id, tags_key) VALUES `;
@@ -33,7 +33,7 @@ async function tagsLinkBeer(req, res, next) {
     }
 
     sql += `(26, "L");`
-    // await dao.query(sql);
+    // await dao.query(sql); // 또 실행되면 안되니 주석 처리.
     
     res.json('done');
 }
