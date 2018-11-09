@@ -38,7 +38,7 @@ app.get('/', function(req,res,next){
     res.send('welcome beers API!')
 });
 
-app.use('/test', setJSON, require('./routes/test'));
+app.use('/dbInsertHelper', setJSON, require('./routes/dbInsertHelper'));
 app.use('/beears', setJSON, require('./routes/beears'));
 app.use('/tags', setJSON, require('./routes/tags'));
 app.use('/purchase', setJSON, require('./routes/purchase'));
