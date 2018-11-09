@@ -39,7 +39,7 @@ app.get('/', function(req,res,next){
 });
 
 app.use('/dbInsertHelper', setJSON, require('./routes/dbInsertHelper'));
-app.use('/beears', setJSON, require('./routes/beears'));
+app.use('/beers', setJSON, require('./routes/beers'));
 app.use('/tags', setJSON, require('./routes/tags'));
 app.use('/purchase', setJSON, require('./routes/purchase'));
 
@@ -61,7 +61,7 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
-
+// PORT 는 임시로 고정 3000
 app.listen(3000, function () {
     console.log('app listening on port 3000!');
 });
