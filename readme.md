@@ -20,3 +20,6 @@
 
 ## note
 - config/database.js 는 서버와 로컬환경이 각각 다르기 때문에 `.gitignore` 에 추가함
+
+## 작업로그
+- tags 관련 API를 만들 때 branch를 만들어야 겠다는 생각에 git brnch 작업 시작
