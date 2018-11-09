@@ -35,7 +35,7 @@ function setJSON(req, res, next) {
 
 
 //roture
-app.use('/', function(req,res,next){
+app.get('/', function(req,res,next){
     res.send('hello')
 });
 
