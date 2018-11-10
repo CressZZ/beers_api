@@ -73,18 +73,16 @@ async function cartCnt(req, res, next) {
         return false;
     }
 
-    // 2. DB 재고 업데이트
-    // DB 업데이트 할 재고숫자
+    // 2. DB 재고 업데이트 - DB 업데이트 할 재고숫자
     let targetStock = action == 'plus' ? (nowStock - cnt) : (nowStock + cnt)  
-    // parms(tag) 값에 따라 쿼리 설정
+        // parms(tag) 값에 따라 쿼리 설정
     let sql_removeStock = `
         update beers set stock = ${targetStock} where id = ${beerId}; 
     `;
-    // 쿼리를 날린다
+        // 쿼리를 날린다
     await dao.query(sql_removeStock);
 
-    // 3. 장바구니 업데이트
-    // 유저 장바구니 내역
+    // 3. 장바구니 업데이트 -  유저 장바구니 내역
     let sql_count = `select count from cart where user_id = ${userId} and beer_id = ${beerId};`
     let nowCount = await dao.query(sql_count);
     nowCount = Number(nowCount[0].count);
