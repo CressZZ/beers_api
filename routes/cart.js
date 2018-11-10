@@ -5,7 +5,23 @@ var dao = require('../common_dao');
 
 router.get('/cnt/:action/:userId/:beerId/:cnt',cartCnt ); 
 router.get('/:action/:userId/:beerId/',cartAction ); 
+router.get('/:userId',getCart ); 
 
+/**
+ * 장바구니 정보 가져오기
+ * @param {number} userId 유저 아이디
+ * @param {object} {result:"장바구니 조회 성공", status:200, cart:cart}
+ */
+async function getCart(req, res, next) {
+    let userId = req.params.userId;
+    
+    // 장바구니 현황 쿼리
+    let sql_cart = `select user_id, beer_id, count from cart where user_id = ${userId}`
+    let cart =  await dao.query(sql_cart);
+
+    res.json({result:"장바구니 조회 성공", status:200, cart:cart});
+
+}
 /**
  * 장바구니에 아이탬 추가 / 삭제
  * @param {string} action 'add' / 'del'
@@ -70,6 +86,7 @@ async function cartCnt(req, res, next) {
     nowStock = Number(nowStock[0].stock);
     // 장바구니 담기 액션이고, 재고가 모자랄때
     if(action == 'plus' && nowStock < cnt){
+        res.json({result:`재고가 모자랍니다.`, status:500});
         return false;
     }
 
@@ -89,12 +106,17 @@ async function cartCnt(req, res, next) {
     let targetCnt = action == 'plus' ? (nowCount + cnt) : (nowCount - cnt)  
 
     let sql_nowCart = `
-        update cart set count = ${targetCnt} cart where user_id = ${userId} and beer_id = ${beerId}; 
+        update cart set count = ${targetCnt}  where user_id = ${userId} and beer_id = ${beerId}; 
     `;
 
     await dao.query(sql_nowCart);
 
-    res.json({result:"수량변경 성공", status:200});
+
+    // 4.장바구니 현황 쿼리
+    let sql_cart = `select user_id, beer_id, count from cart where user_id = ${userId}`
+    let cart =  await dao.query(sql_cart);
+
+    res.json({result:"수량변경 성공", status:200, cart:cart});
 }
 
 module.exports = router;
