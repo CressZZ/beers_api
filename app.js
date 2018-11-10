@@ -50,6 +50,10 @@ app.use(function(req, res, next) {
     next(err);
 });
 
+// static path 설정
+app.use('/static', express.static(__dirname + '/static'));
+app.use('/assets', express.static(__dirname + '/assets'));
+
 // error handler
 app.use(function(err, req, res, next) {
     // set locals, only providing error in development
