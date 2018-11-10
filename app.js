@@ -45,6 +45,7 @@ app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/dbInsertHelper', setJSON, require('./routes/dbInsertHelper'));
 app.use('/beers', setJSON, require('./routes/beers'));
 app.use('/tags', setJSON, require('./routes/tags'));
+app.use('/cart', setJSON, require('./routes/cart'));
 app.use('/purchase', setJSON, require('./routes/purchase'));
 
 // catch 404 and forward to error handler
