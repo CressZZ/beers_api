@@ -4,43 +4,6 @@ var dao = require('../common_dao');
 
 
 router.get('/list/:tag?', getBeers); 
-router.get('/cart_action/:action/:id/:cnt',cartAction ); 
-
-/**
- * 장바구니에 담거나 뺄때
- * @param {string} action // 'add' | 'del'  
- * @param {number} id 상품 id 
- * @param {number} cnt 장바구니에 담을 갯수
- * @return {object} // {result:"장바구니 추가 성공"}
- */
-async function cartAction(req, res, next) {
-    let action = req.params.action
-    let beerId = req.params.id;
-    let cnt = Number(req.params.cnt);
-    
-    // 일단 DB에 있는 상품의 재고파악
-    let sql_stock = `select stock from beers where id = ${beerId};`
-    let nowStock = await dao.query(sql_stock);
-    nowStock = Number(nowStock[0].stock);
-
-    // 장바구니 담기 액션이고, 재고가 모자랄때
-    if(action == 'add' && nowStock < cnt){
-        return false;
-    }
-
-    // DB 업데이트 할 재고숫자
-    let targetStock = action == 'add' ? (nowStock - cnt) : (nowStock + cnt) 
-
-    // parms(tag) 값에 따라 쿼리 설정
-    let sql_removeStock = `
-        update beers set stock = ${targetStock} where id = ${beerId};
-    `;
-
-    // 쿼리를 날린다
-    await dao.query(sql_removeStock);
-
-    res.json({result:"재고 수정 성공", status:200});
-}
 
 /**
  * params로 전달된 tag에 따라 맥주 리스트를 불러온다. 
