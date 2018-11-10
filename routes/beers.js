@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var dao = require('../common_dao');
 
-router.get('/list/:tag', getBeers); 
+
+router.get('/list/:tag?', getBeers); 
 
 /**
  * params로 전달된 tag에 따라 맥주 리스트를 불러온다. 
@@ -11,7 +12,7 @@ router.get('/list/:tag', getBeers);
  * @return {array-json} 맥주리스트 객체
  */
 async function getBeers(req, res, next) {
-    let tagsS = req.params.tag; 
+    let tagsS = req.params.tag ?  req.params.tag : ''; 
     tagsS = tagsS.replace(/_/g, '\",\"'); 
 
     // parms(tag) 값에 따라 쿼리 설정
