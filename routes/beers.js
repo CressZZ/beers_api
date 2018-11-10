@@ -49,6 +49,7 @@ async function getBeers(req, res, next) {
 function preProcessBeers(beers){
     let _beers = beers.map((beer)=>{
         beer.tags = beer.tags.split(',')
+        beer.tags.sort();
         return beer
     })
     return _beers;
