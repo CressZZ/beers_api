@@ -38,6 +38,10 @@ app.get('/', function(req,res,next){
     res.send('welcome beers API!')
 });
 
+// static path 설정
+app.use('/static', express.static(__dirname + '/static'));
+app.use('/assets', express.static(__dirname + '/assets'));
+
 app.use('/dbInsertHelper', setJSON, require('./routes/dbInsertHelper'));
 app.use('/beers', setJSON, require('./routes/beers'));
 app.use('/tags', setJSON, require('./routes/tags'));
@@ -49,10 +53,6 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
-
-// static path 설정
-app.use('/static', express.static(__dirname + '/static'));
-app.use('/assets', express.static(__dirname + '/assets'));
 
 // error handler
 app.use(function(err, req, res, next) {
