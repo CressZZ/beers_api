@@ -1,4 +1,19 @@
 # API server
+
+# 개요
+1. 리엑트로 리스트 페이지 / 장바구니 페이지 제작 (로컬환경 구동)
+2. API 서버 AWS로 구현
+3. API 접속 url : http://54.180.92.204
+
+## Github
+```
+// API
+git clone https://github.com/CressZZ/beers_api.git
+
+// Client(react)
+git clone https://github.com/CressZZ/beers_api.git
+```
+
 ## API
 - 맥주목록 가져오기
 `http://13.209.98.23:3000/beers/list/:tag`
@@ -6,7 +21,7 @@
  * params로 전달된 tag에 따라 맥주 리스트를 불러온다. 
  * 목록은 일치하는 태그가 많은 순으로 정렬함
  * @param {string} tag // ex) 'A_BG_C_BK'
- 
+
  * 200 OK {array-json} 맥주리스트 객체
 
 ```
