@@ -6,7 +6,8 @@
  * params로 전달된 tag에 따라 맥주 리스트를 불러온다. 
  * 목록은 일치하는 태그가 많은 순으로 정렬함
  * @param {string} tag // ex) 'A_BG_C_BK'
- * @return {array-json} 맥주리스트 객체
+ 
+ * 200 OK {array-json} 맥주리스트 객체
 
 ```
 
@@ -14,7 +15,8 @@
 `http://13.209.98.23:3000/cart/:tag`
 ```
  * @param {number} userId 유저 아이디
- * @param {object} {result:"장바구니 조회 성공", status:200, cart:cart}
+
+ * 200 OK {result:"장바구니 조회 성공", status:200, cart:cart}
 ```
 
 - 장바구니 추가/삭제 하기
@@ -25,7 +27,8 @@
  * @param {number} userId 상품 id 
  * @param {number} beerId 상품 id 
  * @param {number} cnt 장바구니에 담을 갯수
- * @return {object} // {result:"장바구니 추가 성공"}
+
+ * 200 OK {result:"장바구니 추가 성공"}
 
 ```
 
@@ -34,7 +37,8 @@
 
 ```
  * @param {number} userId 
- * @return {object} {result:"장바구니 비우기 성공", status:200}
+
+ * 200 OK {result:"장바구니 비우기 성공", status:200}
 
 ```
 
@@ -48,6 +52,10 @@
  *      {number} cnt, 
  *      {number{ totalPrice
  *  }
+
+ 200 OK
+ {'구매 성공', status:200, totalCount:cnt, totalPrice:totalPrice}
+
 ```
 
 - 태그 목록 가져오기

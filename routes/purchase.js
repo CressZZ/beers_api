@@ -32,7 +32,7 @@ async function purchase(req, res, next) {
         await dao.query(sql_purchase);
     })
     
-    res.json({result:'구매 성공', status:200});
+    res.json({result:'구매 성공', status:200, totalCount:cnt, totalPrice:totalPrice});
 }
 
 module.exports = router;
