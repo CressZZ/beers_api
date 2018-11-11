@@ -44,8 +44,6 @@ async function CommonGetCart(userId){
  */
 async function getCart(req, res, next) {
     let userId = req.params.userId;
-    
-    
     let cart =  await CommonGetCart(userId)
 
     res.json({result:"장바구니 조회 성공", status:200, cart:cart});
@@ -105,6 +103,7 @@ async function cartControl(req, res, next) {
 /**
  * 장바구니 리셋
  * @param {number} userId 
+ * @return {object} {result:"장바구니 비우기 성공", status:200}
  */
 async function resetCart(req, res, next){
     let userId = req.params.userId;

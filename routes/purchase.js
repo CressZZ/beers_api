@@ -7,6 +7,12 @@ router.post('/', purchase);
 
 /**
  *  구매 API 
+ *  data{
+ *      {object} beer, 
+ *      {number} userId, 
+ *      {number} cnt, 
+ *      {number{ totalPrice
+ *  }
  */
 async function purchase(req, res, next) {
     let regdt = common.getDate();
