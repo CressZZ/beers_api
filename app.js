@@ -67,7 +67,7 @@ app.use(function(err, req, res, next) {
 });
 
 // PORT 는 임시로 고정 3000
-app.listen(3000, function () {
+app.listen(3001, function () {
     console.log('app listening on port 3000!');
 });
 

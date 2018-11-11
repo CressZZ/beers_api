@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var dao = require('../common_dao');
-
+var common = require('../lib/utils');
 
 router.get('/list/:tag?', getBeers); 
 
@@ -35,24 +35,10 @@ async function getBeers(req, res, next) {
     // 쿼리를 날린다
     let beers = await dao.query(sql);
 
-    // DB에서 받아온 맥주리스트 전처리
-    beers = preProcessBeers(beers);
+    // DB에서 받아온 맥주리스트 전처리 (tags에 대한 값으로 들어온 String 타입을 과제 조건에 맞게 Array로 변경) 진행한다. 
+    beers = common.preProcessBeers(beers);
 
     res.json(beers);
-}
-
-/**
- * @param {array} 맥주리스트 객체
- * tags에 대한 값으로 들어온 String 타입을 
- * 과제 조건에 맞게 Array로 변경
- */
-function preProcessBeers(beers){
-    let _beers = beers.map((beer)=>{
-        beer.tags = beer.tags.split(',')
-        beer.tags.sort();
-        return beer
-    })
-    return _beers;
 }
 
 

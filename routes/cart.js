@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var dao = require('../common_dao');
+var common = require('../lib/utils');
 
 
 router.get('/:action/:userId/:beerId/:cnt',cartCnt ); 
@@ -29,6 +30,9 @@ async function CommonGetCart(userId){
         on C.user_id = A.user_id and C.beer_id = A.beer_id;
     `
     let cart =  await dao.query(sql_cart);
+
+    // DB에서 받아온 맥주리스트 전처리 (tags에 대한 값으로 들어온 String 타입을 과제 조건에 맞게 Array로 변경) 진행한다. 
+    cart = common.preProcessBeers(cart);
     return cart;
 }
 /**
