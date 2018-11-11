@@ -104,10 +104,10 @@ async function getNowCount(userId, beerId){
 function setUpdateCartSql(action, nowCount, cnt, userId, beerId){
     let _sql_updateCart;
     let targetCnt = action == 'plus' ? (nowCount + cnt) : (nowCount - cnt)  
-    if(targetCnt == 0){
+    if(action == 'minus' && targetCnt == 0){
         // 신규추가 일때
         _sql_updateCart = `DELETE FROM cart where user_id = ${userId} and beer_id = ${beerId};`
-    }else if (targetCnt == 1){
+    }else if (action == 'plus' && targetCnt == 1){
         // 삭제 일때
         _sql_updateCart = `INSERT INTO cart  (user_id, beer_id, count) VALUES (${userId}, ${beerId}, 1);`
     }else{
