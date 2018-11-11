@@ -4,8 +4,10 @@ var dao = require('../common_dao');
 var common = require('../lib/utils');
 
 
-router.get('/:action/:userId/:beerId/:cnt',cartCnt ); 
-router.get('/:userId',getCart ); 
+router.get('/:userId',getCart ); //장바구니 리스트 불러오기
+router.get('/reset/:userId',resetCart );  // 장바구니 비우기
+router.get('/:action/:userId/:beerId/:cnt',cartControl ); // 장바구니 액션 (추가, 삭제)
+
 
 async function CommonGetCart(userId){
     let sql_cart = `
@@ -57,9 +59,9 @@ async function getCart(req, res, next) {
  * @param {number} beerId 상품 id 
  * @param {number} cnt 장바구니에 담을 갯수
  * @return {object} // {result:"장바구니 추가 성공"}
+ let action = req.params.action
  */
-async function cartCnt(req, res, next) {
-    let action = req.params.action
+async function cartControl(req, res, next) {
     let beerId = req.params.beerId;
     let userId = req.params.userId;
     let cnt = Number(req.params.cnt);
@@ -101,10 +103,23 @@ async function cartCnt(req, res, next) {
 }
 
 /**
+ * 장바구니 리셋
+ * @param {number} userId 
+ */
+async function resetCart(req, res, next){
+    let userId = req.params.userId;
+    let sql_resetCart= `DELETE FROM cart where user_id = ${userId};`
+    await dao.query(sql_resetCart);
+
+    res.json({result:"장바구니 비우기 성공", status:200});
+}
+
+/**
  * DB에 있는 상품의 재고파악
  * @param {number} beerId 
  */
 async function getNowStoc(beerId){
+    
     let sql_stock = `select stock from beers where id = ${beerId};`
     let nowStock = await dao.query(sql_stock);
     nowStock = Number(nowStock[0].stock);
