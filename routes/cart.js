@@ -59,12 +59,12 @@ async function getCart(req, res, next) {
  * @param {number} beerId 상품 id 
  * @param {number} cnt 장바구니에 담을 갯수
  * @return {object} // {result:"장바구니 추가 성공"}
- let action = req.params.action
  */
 async function cartControl(req, res, next) {
     let beerId = req.params.beerId;
     let userId = req.params.userId;
     let cnt = Number(req.params.cnt);
+    let action = req.params.action
     
     // 1. 일단 DB에 있는 상품의 재고파악
     let nowStock = await getNowStoc(beerId);
