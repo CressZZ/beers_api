@@ -6,6 +6,31 @@ var dao = require('../common_dao');
 router.get('/:action/:userId/:beerId/:cnt',cartCnt ); 
 router.get('/:userId',getCart ); 
 
+async function CommonGetCart(userId){
+    let sql_cart = `
+    select C.count, A.* 
+    from 
+        (select 
+            C.user_id, C.beer_id,
+            B.id, B.name, B.image, B.price, B.stock,
+            GROUP_CONCAT(T.name) as tags
+        from 
+            beers B 
+            join tags_link_beers TLB on B.id = TLB.beers_id
+            join tags T on TLB.tags_key = T.key
+            join cart C on C.beer_id = B.id
+        where 
+            C.user_id = ${userId}
+        group by 
+            B.id 
+        order by 
+            count(TLB.tags_key) DESC) as A
+     join cart C 
+        on C.user_id = A.user_id and C.beer_id = A.beer_id;
+    `
+    let cart =  await dao.query(sql_cart);
+    return cart;
+}
 /**
  * 장바구니 정보 가져오기
  * @param {number} userId 유저 아이디
@@ -14,9 +39,8 @@ router.get('/:userId',getCart );
 async function getCart(req, res, next) {
     let userId = req.params.userId;
     
-    // 장바구니 현황 쿼리
-    let sql_cart = `select user_id, beer_id, count from cart where user_id = ${userId}`
-    let cart =  await dao.query(sql_cart);
+    
+    let cart =  await CommonGetCart(userId)
 
     res.json({result:"장바구니 조회 성공", status:200, cart:cart});
 
@@ -67,8 +91,7 @@ async function cartCnt(req, res, next) {
     
 
     // 7. 장바구니 현황 파악
-    let sql_cart = `select user_id, beer_id, count from cart where user_id = ${userId}`
-    let cart =  await dao.query(sql_cart);
+    let cart =  await CommonGetCart(userId)
 
     res.json({result:"수량변경 성공", status:200, cart:cart});
 }
